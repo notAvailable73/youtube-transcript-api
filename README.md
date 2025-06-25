@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# YouTube Transcript API
 
-## Getting Started
+A REST API endpoint that extracts transcripts from YouTube videos. This API supports multiple languages and returns structured transcript data with timestamps.
 
-First, run the development server:
+ 
+
+## 📋 Table of Contents
+
+- [Demo](#demo) 
+- [Usage](#usage)
+- [API Reference](#api-reference)
+- [Response Format](#response-format)
+- [Error Handling](#error-handling) 
+- [Contributing](#contributing)
+- [License](#license)
+
+## 🌐 Demo
+
+Try the API: `https://your-deployment-url.vercel.app/api/transcript`
+
+
+## 📖 Usage
+
+### Basic Request
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+GET /api/transcript?url=https://www.youtube.com/watch?v=VIDEO_ID
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### With Language Parameter
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+GET /api/transcript?url=https://www.youtube.com/watch?v=VIDEO_ID&lang=hi
+```
+ 
+## 📚 API Reference
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Endpoint
 
-## Learn More
+```
+GET /api/transcript
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Query Parameters
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Parameter | Type   | Required | Default | Description |
+|-----------|--------|----------|---------|-------------|
+| `url`     | string | Yes      | -       | YouTube video URL (supports both youtube.com and youtu.be formats) |
+| `lang`    | string | No       | `en`    | Language code for transcript (e.g., 'en', 'hi', 'es', 'fr') |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Supported URL Formats
 
-## Deploy on Vercel
+- `https://www.youtube.com/watch?v=VIDEO_ID`
+- `https://youtu.be/VIDEO_ID`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📊 Response Format
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Success Response
+
+```json
+{
+  "transcript": [
+    {
+      "text": "आपको पता है आप में और फेमस ब्लॉगर्स में",
+      "startMs": "80",
+      "endMs": "2440"
+    },
+    {
+      "text": "सबसे बड़ा डिफरेंस क्या है कि जो फेमस",
+      "startMs": "2440", 
+      "endMs": "4319"
+    }
+  ]
+}
+```
+
+### Response Fields
+
+| Field     | Type   | Description |
+|-----------|--------|-------------|
+| `text`    | string | The transcript text segment |
+| `startMs` | string | Start time in milliseconds |
+| `endMs`   | string | End time in milliseconds |
+
+## ⚠️ Error Handling
+
+### Error Response Format
+
+```json
+{
+  "error": "Error message description"
+}
+```
+
+ 
+ 
+ 
+ 
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+ 
+## 📞 Support
+
+If you have any questions or issues, please open an issue on GitHub or contact [mhsiam121@gmail.com](mailto:mhsiam121@gmail.com).
+
+---
+
+Made with ❤️ by [MD Mainul Hasan](https://github.com/notAvailable73)
