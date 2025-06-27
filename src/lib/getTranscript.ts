@@ -6,6 +6,14 @@ interface TranscriptSegment {
   endMs: string;
 }
 
+interface InitialSegment {
+  start_ms: string;
+  end_ms: string;
+  snippet: {
+    text?: string; // Make text optional to match the library type
+  };
+}
+
 export async function getTranscript(videoId: string, lang: string = 'en'): Promise<TranscriptSegment[]> {
   const yt = await Innertube.create({
     client_type: ClientType.WEB,
@@ -22,10 +30,9 @@ export async function getTranscript(videoId: string, lang: string = 'en'): Promi
     throw new Error("Transcript not available for this language.");
   }
 
-  return scriptInfo.transcript.content.body.initial_segments.map((segment: any) => ({
-    text: segment.snippet.text,
+  return scriptInfo.transcript.content.body.initial_segments.map((segment: InitialSegment) => ({
+    text: segment.snippet.text ?? '',
     startMs: segment.start_ms,
     endMs: segment.end_ms,
   }));
 }
- 

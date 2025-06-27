@@ -1,5 +1,5 @@
 import { getTranscript } from '@/lib/getTranscript';
-import { NextResponse } from 'next/server'; 
+import { NextResponse } from 'next/server';
 
 function extractVideoId(url: string): string | null {
   try {
@@ -32,7 +32,11 @@ export async function GET(req: Request) {
   try {
     const transcript = await getTranscript(videoId, lang);
     return NextResponse.json({ transcript });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Unknown error' }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ error: "Unknown error" }, { status: 500 });
   }
 }
