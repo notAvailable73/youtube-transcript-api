@@ -31,7 +31,7 @@ export async function GET(req: Request) {
 
   try {
     const transcript = await getTranscript(videoId, lang);
-    return NextResponse.json({ transcript });
+    return NextResponse.json({ success: true, transcript });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
