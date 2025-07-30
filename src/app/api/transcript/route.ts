@@ -21,12 +21,12 @@ export async function GET(req: Request) {
   const lang = searchParams.get('lang') || 'en';
 
   if (!url) {
-    return NextResponse.json({ error: 'Missing YouTube URL' }, { status: 400 });
+    return NextResponse.json({ error: 'Missing YouTube URL', success: false }, { status: 400 });
   }
 
   const videoId = extractVideoId(url);
   if (!videoId) {
-    return NextResponse.json({ error: 'Invalid YouTube URL' }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid YouTube URL', success: false }, { status: 400 });
   }
 
   try {
@@ -34,9 +34,9 @@ export async function GET(req: Request) {
     return NextResponse.json({ success: true, transcript });
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return NextResponse.json({ error: error.message, success: false }, { status: 500 });
     }
 
-    return NextResponse.json({ error: "Unknown error" }, { status: 500 });
+    return NextResponse.json({success: false , error: "Unknown error" }, { status: 500 });
   }
 }
